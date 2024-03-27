@@ -8,7 +8,7 @@ func binarySearch(list []int, target int) int {
 
 	guess := list[mid]
 
-	for {
+	for low <= high {
 		if guess == target {
 			return guess
 		}
@@ -20,8 +20,7 @@ func binarySearch(list []int, target int) int {
 			high = mid + 1
 		}
 
-		return 0
-
 	}
 
+	return -1
 }
