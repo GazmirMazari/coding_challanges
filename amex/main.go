@@ -31,31 +31,20 @@ func main() {
 	if err := json.Unmarshal(body, &earthquakeData); err != nil {
 		log.Fatalf("Failed to unmarshal JSON: %v", err)
 	}
-
-	// Access the "features" key, which should be an array of objects
-	features, ok := earthquakeData["features"].([]interface{})
-	if !ok {
-		log.Fatal("Unexpected format for 'features'")
-	}
-
-	// Collect the earthquake codes
 	var codes []string
+	features, _ := earthquakeData["features"].([]interface{})
+
 	for _, feature := range features {
-		featureMap, ok := feature.(map[string]interface{})
-		if !ok {
-			continue
-		}
+		///this is a map here
+		featureMap, _ := feature.(map[string]interface{})
 
-		// Access properties within each feature
-		properties, ok := featureMap["properties"].(map[string]interface{})
-		if ok {
-			code, ok := properties["code"].(string)
-			if ok {
-				codes = append(codes, code)
-			}
-		}
+		prop, _ := featureMap["properties"].(map[string]interface{})
+		//access codes
+		code, _ := prop["code"].(string)
+
+		//append codes
+		codes = append(codes, code)
 	}
-
 	// Print the collected codes
 	fmt.Println("These are the earthquake codes:", codes)
 }
