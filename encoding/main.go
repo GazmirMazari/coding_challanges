@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/bytedance/sonic"
 	"log"
 )
@@ -20,16 +19,17 @@ type CanadaRoot struct {
 	} `json:"features"`
 }
 
-func retrieveData(name string) {
-	file := Unzip(name)
-	var canRoot CanadaRoot
-	//unmarshall the data using st library
-	err := json.Unmarshal(file, &canRoot)
-	if err != nil {
-		log.Println("canadaRoot was not unmarshalled", err)
-	}
-
-}
+//
+//func retrieveData(name string) {
+//	file := Unzip(name)
+//	var canRoot CanadaRoot
+//	//unmarshall the data using st library
+//	err := json.Unmarshal(file, &canRoot)
+//	if err != nil {
+//		log.Println("canadaRoot was not unmarshalled", err)
+//	}
+//
+//}
 
 func retrieveDatUsingByteDanceSonic(name string) {
 	file := Unzip(name)
@@ -44,6 +44,6 @@ func retrieveDatUsingByteDanceSonic(name string) {
 
 func main() {
 	const fileName = "canada_geometry.json.gz"
-	retrieveData(fileName)
+	//retrieveData(fileName)
 	retrieveDatUsingByteDanceSonic(fileName)
 }
