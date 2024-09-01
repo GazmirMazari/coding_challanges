@@ -3,19 +3,22 @@ go test -run none -bench AlgorithmOne -benchtime 3s -benchmem
 go test -run none -bench AlgorithmTwo -benchtime 3s -benchmem
 
 Benchmark result
-BenchmarkAlgorithmTwo-8              999           4566118 ns/op         1760972 B/op       1182 allocs/op  -standard library/json
-BenchmarkAlgorithmOne-8              364          10538601 ns/op         1443300 B/op       1675 allocs/op - sonic/bytedance
+BenchmarkAlgorithmTwo-8              999           4566118 ns/op         1760972 B/op       1182 allocs/op  -sonic/bytedance 
+BenchmarkAlgorithmOne-8              364          10538601 ns/op         1443300 B/op       1675 allocs/op - encoding
 
 
 BenchmarkAlgorithmTwo: Faster algorithm (4.57 ms/op), uses more memory (1.76 MB/op), and has fewer memory allocations (1182 allocs/op).
 
 BenchmarkAlgorithmOne: Slower algorithm (10.54 ms/op), uses less memory (1.44 MB/op), but has more memory allocations (1675 allocs/op).
 
-#Create memory profiles to understand memory allocation
-go test -run none -bench AlgorithmOne -benchtime 3s -benchmem -memprofile mem_algo_one.out
-go test -run none -bench AlgorithTwo -benchtime 3s -benchmem -memprofile mem_algo_two.out
 
+In order to create a memory profile, you can use the -memprofile flag when running the benchmark tests.
+
+go test -run none -bench AlgorithmOne -benchtime 3s -benchmem -memprofile mem_one.out
+go test -run none -bench AlgorithTwo -benchtime 3s -benchmem -memprofile mem_two.out
+We are going to use -alloc_space flag to see the memory allocation instead of in alloc_inused_space
 go tool pprof -alloc_space memcpu.test mem_algo_one.out
+go tool pprof -inuse_space memcpu.test mem_algo_one.out
 (pprof) list retrieveData
 Total: 934.79MB
 ROUTINE ======================== jsonEncoder.retrieveData 
@@ -30,6 +33,7 @@ ROUTINE ======================== jsonEncoder.retrieveData
 .          .     30:   }
 .          .     31:
 .          .     32:}
+
 ROUTINE ======================== 
 0   931.28MB (flat, cum) 99.62% of Total
 .          .      8:func BenchmarkAlgorithmOne(b *testing.B) {

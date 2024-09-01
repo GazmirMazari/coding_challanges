@@ -5,15 +5,15 @@ import (
 	"testing"
 )
 
-//func BenchmarkAlgorithmOne(b *testing.B) {
-//	var buff bytes2.Buffer
-//	nameFile := "canada_geometry.json.gz"
-//	b.ResetTimer()
-//	for n := 0; n < b.N; n++ {
-//		buff.Reset()
-//		retrieveData(nameFile)
-//	}
-//}
+func BenchmarkAlgorithmOne(b *testing.B) {
+	var buff bytes2.Buffer
+	nameFile := "canada_geometry.json.gz"
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		buff.Reset()
+		algoOne(nameFile)
+	}
+}
 
 func BenchmarkAlgorithmTwo(b *testing.B) {
 	var buff bytes2.Buffer
@@ -21,6 +21,6 @@ func BenchmarkAlgorithmTwo(b *testing.B) {
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		buff.Reset()
-		retrieveDatUsingByteDanceSonic(nameFile)
+		algoTwo(nameFile)
 	}
 }
